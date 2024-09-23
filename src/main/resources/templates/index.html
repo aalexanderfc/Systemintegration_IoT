@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sensor Data Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Temperature and Humidity Dashboard</h1>
+
+<!-- Display the existing sensor data -->
+<h2>Stored Sensor Data</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Temperature (°C)</th>
+        <th>Humidity (%)</th>
+        <th>Timestamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate through the sensor data and display it -->
+    <tr th:each="sensorData : ${sensorDataList}">
+        <td th:text="${sensorData.temperature}">Temperature</td>
+        <td th:text="${sensorData.humidity}">Humidity</td>
+        <td th:text="${#dates.format(sensorData.timestamp, 'dd-MM-yyyy HH:mm:ss')}">Timestamp</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
