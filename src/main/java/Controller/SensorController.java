@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @Service
 public class SensorController {
 
-
     private final SensorDataService service;
 
     @Autowired
@@ -17,10 +16,9 @@ public class SensorController {
         this.service = sensorService;
     }
 
-    @PostMapping("/data")
+    @PostMapping("/sensor_data")
     public SensorData saveSensorData(@RequestParam double temperature, @RequestParam double humidity) {
         return service.saveSensorData(temperature, humidity);
-
     }
-
 }
+
