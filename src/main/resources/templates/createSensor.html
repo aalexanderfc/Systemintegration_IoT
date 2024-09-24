@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skapa Sensor</title>
+</head>
+<body>
+
+<h2>Skapa en ny sensor</h2>
+
+<form action="#" th:action="@{/sensores/add}" method="post">
+    <label for="name">Sensor Name:</label><br>
+    <input type="text" id="name" name="name" placeholder="Ange sensor namn" required><br><br>
+
+    <label for="type">Sensor Type:</label><br>
+    <input type="text" id="type" name="type" placeholder="Ange sensor typ" required><br><br>
+
+    <label for="unit">Sensor Unit:</label><br>
+    <input type="text" id="unit" name="unit" placeholder="Ange enhet (t.ex. Celsius, hPa)" required><br><br>
+
+    <input type="submit" value="Skapa Sensor">
+</form>
+
+</body>
+</html>
