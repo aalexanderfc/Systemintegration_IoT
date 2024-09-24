@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${sensorName} + ' - Sensorhistorik'">Sensorhistorik</title>
+</head>
+<body>
+
+<h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
+<h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
+<h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
+<div th:if="${!#lists.isEmpty(sensorDataList)}">
+    <h3>Sensorhistorik:</h3>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Värde</th>
+            <th>Skapad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="data : ${sensorDataList}">
+            <td th:text="${data.value}"></td>
+            <td th:text="${#temporals.format(data.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
