@@ -1,7 +1,7 @@
-package Controller;
+package com.example.systemintegrationiot.Controller;
 
-import Data.SensorData;
-import Service.SensorDataService;
+import com.example.systemintegrationiot.Data.SensorData;
+import com.example.systemintegrationiot.Service.SensorDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
