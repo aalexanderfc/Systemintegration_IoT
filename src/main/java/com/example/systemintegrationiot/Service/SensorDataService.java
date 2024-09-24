@@ -1,7 +1,7 @@
-package Service;
+package com.example.systemintegrationiot.Service;
 
-import Data.SensorData;
-import Repos.SensorDataRepository;
+import com.example.systemintegrationiot.Data.SensorData;
+import com.example.systemintegrationiot.Repos.SensorDataRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;

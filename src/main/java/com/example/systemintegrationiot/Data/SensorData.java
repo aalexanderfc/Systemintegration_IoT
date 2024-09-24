@@ -1,4 +1,4 @@
-package Data;
+package com.example.systemintegrationiot.Data;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
