@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${sensorName} + ' - Sensorhistorik'">Sensorhistorik</title>
+</head>
+<body>
+
+<h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
+<h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
+<h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
+
+</body>
+</html>
