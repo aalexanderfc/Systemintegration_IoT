@@ -90,6 +90,7 @@ public class SensorDataController {
         model.addAttribute("sensorName", sensor.getName());
         model.addAttribute("sensorType", sensor.getType());
         model.addAttribute("latestSensorData", latestSensorData.getValue());
+        model.addAttribute("Date",latestSensorData.getCreated());
         model.addAttribute("sensorTitle", " History Data");
 
 
