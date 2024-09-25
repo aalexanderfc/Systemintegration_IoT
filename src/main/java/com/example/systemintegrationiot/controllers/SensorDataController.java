@@ -42,14 +42,16 @@ public class SensorDataController {
 
     }
 
-
+    private Sensor getSensorById(Long id) {//funktion för att hämta sensor med id och undvik duplicering av kod
+        return sensorRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
+    }
 
 
     @GetMapping("/history/{id}")
     public String getSensorHistory(@PathVariable Long id, Model model) {
 
-        Sensor sensor = sensorRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
+        Sensor sensor = getSensorById(id);
 
         List<SensorData> sensorDataList = sensorDataRepo.findBySensor(sensor);
 
@@ -73,18 +75,18 @@ public class SensorDataController {
     @GetMapping("/lastdata/{id}")
     public String getLastSensorData(@PathVariable Long id, Model model) {
 
-        Sensor sensor = sensorRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
+        Sensor sensor = getSensorById(id);
 
         List<SensorData> SensorDataList = sensorDataRepo.findBySensor(sensor);
+
+        if (SensorDataList.isEmpty()) {// En annan vy för att hantera inget datascenario
+            model.addAttribute("felMeddelande", "Ingen data tillgänglig för sensor-ID " + id);
+            return "noSensorData";
+        }
 
         SensorData latestSensorData = SensorDataList.stream()
                 .max(Comparator.comparing(SensorData::getCreated))
                 .orElseThrow(() -> new IllegalArgumentException("Ingen sensor data tillgänglig för sensor med ID " + id));
-
-        ;
-
-
 
         model.addAttribute("sensorId", sensor.getSensor_id());
         model.addAttribute("sensorName", sensor.getName());

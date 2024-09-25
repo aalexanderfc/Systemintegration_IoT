@@ -34,4 +34,10 @@ public class SensorData {
     protected void onCreate() {
         this.created = LocalDateTime.now();
     }
+
+    public void setTemperature(float temperature) {
+    }
+
+    public void setHumidity(float humidity) {
+    }
 }

@@ -50,4 +50,7 @@ public class Sensor {
     }
 
 
+    public Sensor orElseThrow(Object sensorNotFound) {
+        return null;
+    }
 }
