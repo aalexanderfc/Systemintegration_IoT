@@ -93,8 +93,6 @@ public class SensorDataController {
         model.addAttribute("Date",latestSensorData.getCreated());
         model.addAttribute("sensorTitle", " History Data");
 
-
-
         return "lastSensorData";
     }
 
