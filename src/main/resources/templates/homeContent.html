@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="homeContent">
+    <h2>Welcome to the Home Page</h2>
+    <p>This content is dynamically included in the home page using Thymeleaf.</p>
+
+    <!-- You can include any additional content or links here -->
+    <ul>
+        <li><a th:href="@{/SensorData/history/{id}(id=${sensorId})}">View Sensor History</a></li>
+        <li><a th:href="@{/SensorData/lastdata/{id}(id=${sensorId})}">View Latest Sensor Data</a></li>
+        <li><a th:href="@{/createSensor}">Create New Sensor</a></li>
+    </ul>
+</div>
+</body>
+</html>

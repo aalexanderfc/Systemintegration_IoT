@@ -38,7 +38,7 @@ public class Sensor {
         updated = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy ="sensor")
+    @OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SensorData> sensorsData;
 
     public Sensor (  String name, String type, String unit ){
@@ -49,8 +49,4 @@ public class Sensor {
 
     }
 
-
-    public Sensor orElseThrow(Object sensorNotFound) {
-        return null;
-    }
 }

@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${sensorName} + ' - Sensorhistorik'">Sensorhistorik</title>
+    <title>Latest Sensor Data</title>
 </head>
 <body>
-
-<h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
-<h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
-<h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
-<h2 th:text="'Sensor Data: ' + ${latestSensorData}"></h2>
-
+<h1>Latest Data for Sensor: <span th:text="${sensorName}"></span></h1>
+<p>Sensor ID: <span th:text="${sensorId}"></span></p>
+<p>Sensor Type: <span th:text="${sensorType}"></span></p>
+<p>Latest Value: <span th:text="${latestSensorData}"></span></p>
+<a th:href="@{/}">Return to Home</a>
 </body>
 </html>
+

@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="${sensorName} + ' - Sensorhistorik'">Sensorhistorik</title>
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;  /* This makes the borders continuous */
+        }
+        th, td {
+            border: 1px solid black;  /* Add borders to each cell */
+            padding: 8px;  /* Add some padding */
+        }
+    </style>
 </head>
 <body>
-
 <h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
 <h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
 <h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
+
 <div th:if="${!#lists.isEmpty(sensorDataList)}">
-    <h3>Sensorhistorik:</h3>
-    <table border="1">
+    <h3>Sensor historic:</h3>
+    <table>
         <thead>
         <tr>
             <th>Värde</th>
@@ -28,5 +37,9 @@
     </table>
 </div>
 
+<!-- Optional: Message when no data is available -->
+<div th:if="${#lists.isEmpty(sensorDataList)}">
+    <p>No data available for this sensor.</p>
+</div>
 </body>
 </html>

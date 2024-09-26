@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Controller
-@RequestMapping("SensorData")
+@RequestMapping("/SensorData")
 public class SensorDataController {
 
     private final SensorDataRepo sensorDataRepo;
@@ -23,42 +23,19 @@ public class SensorDataController {
         this.sensorRepo = sensorRepo;
     }
 
-
-
-    //http://localhost:8080/SensorData/addData?sensor_id=2&value=12.0
-
-    @RequestMapping("/addData")
-    public String addData(@RequestParam Long sensor_id,
-                          @RequestParam double value){
-        Sensor sensor = sensorRepo.findById(sensor_id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + sensor_id + " finns inte"));
-
-        SensorData newSensorData = new SensorData(value, sensor);
-
-        sensorDataRepo.save(newSensorData);
-
-
-        return "TheDataIsSaved";
-
+    // Main index route to load the base webpage
+    @GetMapping("/")
+    public String showIndexPage() {
+        return "index";  // Render index.html
     }
 
-    private Sensor getSensorById(Long id) {//funktion för att hämta sensor med id och undvik duplicering av kod
-        return sensorRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
-    }
-
-
+    // Fetch sensor history and return to the view
     @GetMapping("/history/{id}")
     public String getSensorHistory(@PathVariable Long id, Model model) {
-
-        Sensor sensor = getSensorById(id);
+        Sensor sensor = sensorRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
 
         List<SensorData> sensorDataList = sensorDataRepo.findBySensor(sensor);
-
-        System.out.println("Sensor ID: " + sensor.getSensor_id());
-        System.out.println("Sensor Namn: " + sensor.getName());
-        System.out.println("Sensor Typ: " + sensor.getType());
-
 
         model.addAttribute("sensorId", sensor.getSensor_id());
         model.addAttribute("sensorName", sensor.getName());
@@ -66,56 +43,51 @@ public class SensorDataController {
         model.addAttribute("sensorDataList", sensorDataList);
         model.addAttribute("sensorTitle", " History Data");
 
-
-
         return "sensorhistory";
     }
 
-
+    // Fetch the latest sensor data and return to the view
     @GetMapping("/lastdata/{id}")
     public String getLastSensorData(@PathVariable Long id, Model model) {
+        Sensor sensor = sensorRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
 
-        Sensor sensor = getSensorById(id);
+        List<SensorData> sensorDataList = sensorDataRepo.findBySensor(sensor);
 
-        List<SensorData> SensorDataList = sensorDataRepo.findBySensor(sensor);
-
-        if (SensorDataList.isEmpty()) {// En annan vy för att hantera inget datascenario
-            model.addAttribute("felMeddelande", "Ingen data tillgänglig för sensor-ID " + id);
+        if (sensorDataList.isEmpty()) {
+            model.addAttribute("Error Message", "No Sensor data available for sensor-ID " + id);
             return "noSensorData";
         }
 
-        SensorData latestSensorData = SensorDataList.stream()
+        SensorData latestSensorData = sensorDataList.stream()
                 .max(Comparator.comparing(SensorData::getCreated))
-                .orElseThrow(() -> new IllegalArgumentException("Ingen sensor data tillgänglig för sensor med ID " + id));
+                .orElseThrow(() -> new IllegalArgumentException("No Sensor data available for sensor ID " + id));
 
         model.addAttribute("sensorId", sensor.getSensor_id());
         model.addAttribute("sensorName", sensor.getName());
         model.addAttribute("sensorType", sensor.getType());
         model.addAttribute("latestSensorData", latestSensorData.getValue());
-        model.addAttribute("sensorTitle", " History Data");
-
-
+        model.addAttribute("sensorTitle", " Latest Sensor Data");
 
         return "lastSensorData";
     }
 
+    // Create Sensor Functionality
+    // Display the create sensor form
+    @GetMapping("/createSensor")
+    public String createSensorForm(Model model) {
+        model.addAttribute("sensor", new Sensor());  // Create an empty Sensor object
+        return "createSensor";
+    }
 
+    // Handle the form submission and create a new sensor
+    @PostMapping("/createSensor")
+    public String saveSensor(@ModelAttribute Sensor sensor, Model model) {
+        sensorRepo.save(sensor);  // Save the sensor to the database
 
+        model.addAttribute("message", "The sensor data has been saved successfully!");
+        return  "TheDataIsSaved";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 }

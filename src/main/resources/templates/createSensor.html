@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Skapa Sensor</title>
+    <title>Create Sensor</title>
 </head>
 <body>
+<h1>Create a New Sensor</h1>
+<form th:action="@{/SensorData/createSensor}" th:object="${sensor}" method="post">
+    <label for="name">Sensor Name:</label>
+    <input type="text" id="name" th:field="*{name}" placeholder="Sensor Name"/><br/>
 
-<h2>Skapa en ny sensor</h2>
+    <label for="type">Sensor Type:</label>
+    <input type="text" id="type" th:field="*{type}" placeholder="Sensor Type"/><br/>
 
-<form action="#" th:action="@{/sensores/add}" method="post">
-    <label for="name">Sensor Name:</label><br>
-    <input type="text" id="name" name="name" placeholder="Ange sensor namn" required><br><br>
+    <label for="unit">Unit of Measurement:</label>
+    <input type="text" id="unit" th:field="*{unit}" placeholder="Unit"/><br/>
 
-    <label for="type">Sensor Type:</label><br>
-    <input type="text" id="type" name="type" placeholder="Ange sensor typ" required><br><br>
-
-    <label for="unit">Sensor Unit:</label><br>
-    <input type="text" id="unit" name="unit" placeholder="Ange enhet (t.ex. Celsius, hPa)" required><br><br>
-
-    <input type="submit" value="Skapa Sensor">
+    <button type="submit">Create Sensor</button>
+    <button type="button" onclick="window.location.href='/'">Cancel</button>
 </form>
-
 </body>
 </html>
