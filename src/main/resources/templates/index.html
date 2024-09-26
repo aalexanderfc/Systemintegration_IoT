@@ -11,8 +11,8 @@
     <ul>
       <li><a th:href="@{/}">Home</a></li>
       <li><a th:href="@{/SensorData/createSensor}">Create New Sensor</a></li>
-      <li><a th:href="@{/SensorData/history/1}">View Sensor History</a></li>
-      <li><a th:href="@{/SensorData/lastdata/1}">View Latest Sensor Data</a></li>
+      <li><a th:href="@{/sensores/sensorHistory}">View Sensor History</a></li>
+      <li><a th:href="@{/SensorData/lastdata/2}">View Latest Sensor Data</a></li>
 
     </ul>
   </nav>
@@ -26,7 +26,7 @@
     <h3 th:text="'Sensor: ' + ${connectedSensor.name} + ' (' + ${connectedSensor.type} + ')'"></h3>
     <p th:if="${latestData != null}">
       Latest Value: <span th:text="${latestData.value}"></span><br/>
-      Recorded At: <span th:text="${#temporals.format(latestData.created, 'yyyy-MM-dd HH:mm:ss')}"></span>  <!-- Use #temporals instead of #dates -->
+      Recorded At: <span th:text="${#temporals.format(latestData.created, 'yyyy-MM-dd HH:mm:ss')}"></span> <!-- Use #temporals instead of #dates -->
     </p>
     <p th:if="${latestData == null}">
       No data available for this sensor.

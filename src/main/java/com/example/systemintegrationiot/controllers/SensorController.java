@@ -1,14 +1,12 @@
 package com.example.systemintegrationiot.controllers;
 
-
 import com.example.systemintegrationiot.models.Sensor;
 import com.example.systemintegrationiot.repos.SensorRepo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(path="/sensores")
@@ -16,61 +14,53 @@ public class SensorController {
 
     private final SensorRepo sensorRepo;
 
-    SensorController(SensorRepo senRepo){
-        this.sensorRepo=senRepo;
-
+    public SensorController(SensorRepo sensorRepo) {
+        this.sensorRepo = sensorRepo;
     }
-
-
 
     @RequestMapping("/addSensorByForm")
     public String createByForm(Model model) {
         return "createSensor";
     }
 
-
     @PostMapping("/add")
     public String addSensor(@RequestParam String name,
                             @RequestParam String type,
                             @RequestParam String unit,
                             Model model){
-       Sensor savedSensor= sensorRepo.save(new Sensor(name, type, unit));
+        Sensor savedSensor = sensorRepo.save(new Sensor(name, type, unit));
 
         model.addAttribute("sensorId", savedSensor.getSensor_id());
         model.addAttribute("sensorName", savedSensor.getName());
         model.addAttribute("sensorType", savedSensor.getType());
         model.addAttribute("sensorUnit", savedSensor.getUnit());
-        model.addAttribute("sensorTitle", "new sensor created");
+        model.addAttribute("sensorTitle", "New Sensor Created");
 
         return "showNewSensor";
-
     }
-
 
     @GetMapping("/details/{id}")
     public String getSensorDetails(@PathVariable Long id, Model model) {
         Sensor sensor = sensorRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
-
+                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID " + id + " does not exist"));
 
         model.addAttribute("sensorId", sensor.getSensor_id());
         model.addAttribute("sensorName", sensor.getName());
         model.addAttribute("sensorType", sensor.getType());
 
-
         return "sensorDetails";
     }
 
+    // New method to fetch all sensors and display in the sensorHistory.html
+    @GetMapping("/sensorHistory")
+    public String getAllSensors(Model model) {
+        // Fetch all sensors from the database
+        List<Sensor> sensors = sensorRepo.findAll();
 
+        // Add the list of sensors to the model
+        model.addAttribute("sensors", sensors);
 
-
-
-
-
-
-
-
-
-
-
+        // Return the Thymeleaf template sensorHistory.html
+        return "sensorHistory";
+    }
 }

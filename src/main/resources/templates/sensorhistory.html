@@ -1,45 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${sensorName} + ' - Sensorhistorik'">Sensorhistorik</title>
-    <style>
-        table {
-            border: 1px solid black;
-            border-collapse: collapse;  /* This makes the borders continuous */
-        }
-        th, td {
-            border: 1px solid black;  /* Add borders to each cell */
-            padding: 8px;  /* Add some padding */
-        }
-    </style>
+    <title>Sensor History</title>
 </head>
 <body>
-<h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
-<h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
-<h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
 
-<div th:if="${!#lists.isEmpty(sensorDataList)}">
-    <h3>Sensor historic:</h3>
-    <table>
+<header>
+    <h2>All Saved Sensors</h2>
+    <!-- Add a button to go back to the home page -->
+    <button onclick="location.href='/'">Go to Home</button>
+</header>
+
+<!-- Check if the list of sensors is not empty -->
+<div th:if="${!#lists.isEmpty(sensors)}">
+    <h3>Saved Sensors:</h3>
+    <table border="1">
         <thead>
         <tr>
-            <th>Värde</th>
-            <th>Skapad</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Unit</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="data : ${sensorDataList}">
-            <td th:text="${data.value}"></td>
-            <td th:text="${#temporals.format(data.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <!-- Iterate over the list of sensors and display each sensor's properties -->
+        <tr th:each="sensor : ${sensors}">
+            <td th:text="${sensor.sensor_id}"></td>
+            <td th:text="${sensor.name}"></td>
+            <td th:text="${sensor.type}"></td>
+            <td th:text="${sensor.unit}"></td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<!-- Optional: Message when no data is available -->
-<div th:if="${#lists.isEmpty(sensorDataList)}">
-    <p>No data available for this sensor.</p>
+<!-- Show a message if no sensors are found -->
+<div th:if="${#lists.isEmpty(sensors)}">
+    <p>No sensors found in the database.</p>
 </div>
+
+<footer>
+    <!-- Add another "Go to Home" button in the footer -->
+    <button onclick="location.href='/'">Go to Home</button>
+    <p>© 2024 Sensor System Integration</p>
+</footer>
+
 </body>
 </html>
