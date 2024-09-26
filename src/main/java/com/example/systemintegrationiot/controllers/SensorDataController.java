@@ -69,7 +69,6 @@ public class SensorDataController {
         return "sensorhistory";
     }
 
-
     @GetMapping("/lastdata/{id}")
     public String getLastSensorData(@PathVariable Long id, Model model) {
 

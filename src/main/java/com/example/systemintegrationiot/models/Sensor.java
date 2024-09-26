@@ -20,7 +20,6 @@ public class Sensor {
     private String type;
     private String unit;
 
-
     @Column(updatable = false)
     private LocalDateTime created;
 

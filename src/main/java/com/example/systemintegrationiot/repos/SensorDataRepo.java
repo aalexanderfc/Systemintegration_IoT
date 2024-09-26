@@ -9,6 +9,7 @@ import java.util.List;
 public interface SensorDataRepo extends JpaRepository<SensorData, Long> {
     List<SensorData> findBySensor(Sensor sensor);
 
+
 }
 
 

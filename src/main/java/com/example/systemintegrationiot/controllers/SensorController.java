@@ -62,7 +62,6 @@ public class SensorController {
         model.addAttribute("sensorName", sensor.getName());
         model.addAttribute("sensorType", sensor.getType());
 
-
         return "sensorDetails";
     }
 
