@@ -66,6 +66,14 @@ public class SensorController {
         return "sensorDetails";
     }
 
+    @GetMapping("/all")
+    public String getAllSensors(Model model) {
+        List<Sensor> allSensors = sensorRepo.findAll();
+        model.addAttribute("sensors", allSensors);
+
+        return "allSensors";
+    }
+
 
 
 

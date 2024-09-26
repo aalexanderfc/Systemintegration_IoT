@@ -82,7 +82,7 @@ public class SensorDataController {
                 .max(Comparator.comparing(SensorData::getCreated))
                 .orElseThrow(() -> new IllegalArgumentException("Ingen sensor data tillgänglig för sensor med ID " + id));
 
-        ;
+
 
 
 
@@ -93,26 +93,9 @@ public class SensorDataController {
         model.addAttribute("Date",latestSensorData.getCreated());
         model.addAttribute("sensorTitle", " History Data");
 
+
         return "lastSensorData";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
