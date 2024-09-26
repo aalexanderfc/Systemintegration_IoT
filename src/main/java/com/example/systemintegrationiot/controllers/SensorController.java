@@ -71,6 +71,7 @@ public class SensorController {
         List<Sensor> allSensors = sensorRepo.findAll();
         model.addAttribute("sensors", allSensors);
 
+
         return "allSensors";
     }
 

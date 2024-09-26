@@ -14,7 +14,6 @@ public class SensorData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private double value;
 
     @Column(updatable = false)
