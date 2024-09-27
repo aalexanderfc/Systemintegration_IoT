@@ -12,7 +12,9 @@
       <li><a th:href="@{/}">Home</a></li>
       <li><a th:href="@{/SensorData/createSensor}">Create New Sensor</a></li>
       <li><a th:href="@{/sensores/sensorHistory}">View Sensor History</a></li>
-      <li><a th:href="@{/SensorData/lastdata/2}">View Latest Sensor Data</a></li>
+      <li><a th:href="@{SensorData/lastdata}">View Latest Sensor Data</a></li>
+      <li th:if="${sensorId != null}"><a th:href="@{/sensores/details/{id}(id=${sensorId})}">View Sensor Details</a></li>
+
 
     </ul>
   </nav>
@@ -39,7 +41,7 @@
 </main>
 
 <footer>
-  <p>© 2024 Sensor System Integration</p>
+  <p>© 2024 Sensor Systemintegration IoT</p>
 </footer>
 </body>
 </html>

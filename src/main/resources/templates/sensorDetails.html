@@ -3,13 +3,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${sensorName} + ' - Sensorhistorik'">Sensorhistorik</title>
+    <title>Sensor Details</title>
 </head>
 <body>
 
-<h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
-<h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
-<h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
+<h2>Sensor Details</h2>
+
+<!-- Display sensor details -->
+<h3>Sensor ID: <span th:text="${sensorId}"></span></h3>
+<h3>Sensor Name: <span th:text="${sensorName}"></span></h3>
+<h3>Sensor Type: <span th:text="${sensorType}"></span></h3>
+<h3>Sensor Unit: <span th:text="${sensorUnit}"></span></h3>
+
+<a th:href="@{/}">Return to Home</a>
 
 </body>
 </html>

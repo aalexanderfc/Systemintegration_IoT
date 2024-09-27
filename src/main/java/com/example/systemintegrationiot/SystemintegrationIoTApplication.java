@@ -18,8 +18,8 @@ public class SystemintegrationIoTApplication {
     public CommandLineRunner demo(SensorRepo repository) {
         return (args) -> {
             repository.save(new Sensor("DHT100", "temp", "Celsius"));
-            repository.save(new Sensor("BMP180", "pressure", "hPa"));
-            repository.save(new Sensor("MQ135", "gas", "ppm"));
+            repository.save(new Sensor("DHT11", "Temperature", "Celsius"));
+            repository.save(new Sensor("DHT11", "Humidity", "Percentage"));
             repository.save(new Sensor("HCSR04", "distance", "cm"));
             repository.save(new Sensor("DHT101", "temp", "Celsius"));
             repository.save(new Sensor("MHZ19", "CO2", "ppm"));
@@ -29,14 +29,14 @@ public class SystemintegrationIoTApplication {
             repository.save(new Sensor("BME280", "pressure", "hPa"));
 
 
-
         };
 
     }
 
-
-
-
-
-
 }
+
+
+
+
+
+

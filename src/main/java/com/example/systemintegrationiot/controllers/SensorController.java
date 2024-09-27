@@ -47,6 +47,7 @@ public class SensorController {
         model.addAttribute("sensorId", sensor.getSensor_id());
         model.addAttribute("sensorName", sensor.getName());
         model.addAttribute("sensorType", sensor.getType());
+        model.addAttribute("sensorUnit", sensor.getUnit());
 
         return "sensorDetails";
     }
@@ -63,4 +64,24 @@ public class SensorController {
         // Return the Thymeleaf template sensorHistory.html
         return "sensorHistory";
     }
+
+    @GetMapping("/")
+    public String showIndexPage(Model model) {
+        // Fetch the most recent sensor or a specific sensor, for example the first one
+        List<Sensor> sensors = sensorRepo.findAll();
+
+        // Assuming we want to show the first sensor in the list
+        if (!sensors.isEmpty()) {
+            Sensor sensor = sensors.get(0);  // Get the first sensor in the list
+            model.addAttribute("sensorId", sensor.getSensor_id());
+            model.addAttribute("sensorName", sensor.getName());
+            model.addAttribute("sensorType", sensor.getType());
+            model.addAttribute("sensorUnit", sensor.getUnit());
+        } else {
+            model.addAttribute("message", "No sensors available.");
+        }
+
+        return "index";  // Return the Thymeleaf template for index.html
+    }
+
 }

@@ -47,29 +47,43 @@ public class SensorDataController {
     }
 
     // Fetch the latest sensor data and return to the view
-    @GetMapping("/lastdata/{id}")
-    public String getLastSensorData(@PathVariable Long id, Model model) {
-        Sensor sensor = sensorRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
+    @GetMapping("/lastdata")
+    public String getLastSensorDataForMultipleSensors(Model model) {
+        // Fetch sensor with ID 2 (temperature)
+        Sensor sensorTemperature = sensorRepo.findById(2L)
+                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID 2 (Temperature) does not exist"));
 
-        List<SensorData> sensorDataList = sensorDataRepo.findBySensor(sensor);
-
-        if (sensorDataList.isEmpty()) {
-            model.addAttribute("Error Message", "No Sensor data available for sensor-ID " + id);
-            return "noSensorData";
+        List<SensorData> sensorTemperatureDataList = sensorDataRepo.findBySensor(sensorTemperature);
+        if (sensorTemperatureDataList.isEmpty()) {
+            model.addAttribute("messageTemperature", "No data available for sensor ID 2 (Temperature)");
+        } else {
+            SensorData latestTemperatureData = sensorTemperatureDataList.stream()
+                    .max(Comparator.comparing(SensorData::getCreated))
+                    .orElse(null);
+            model.addAttribute("temperatureSensorId", sensorTemperature.getSensor_id());
+            model.addAttribute("temperatureSensorName", sensorTemperature.getName());
+            model.addAttribute("temperatureSensorType", sensorTemperature.getType());
+            model.addAttribute("latestTemperatureData", latestTemperatureData.getValue());
         }
 
-        SensorData latestSensorData = sensorDataList.stream()
-                .max(Comparator.comparing(SensorData::getCreated))
-                .orElseThrow(() -> new IllegalArgumentException("No Sensor data available for sensor ID " + id));
+        // Fetch sensor with ID 3 (humidity)
+        Sensor sensorHumidity = sensorRepo.findById(3L)
+                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID 3 (Humidity) does not exist"));
 
-        model.addAttribute("sensorId", sensor.getSensor_id());
-        model.addAttribute("sensorName", sensor.getName());
-        model.addAttribute("sensorType", sensor.getType());
-        model.addAttribute("latestSensorData", latestSensorData.getValue());
-        model.addAttribute("sensorTitle", " Latest Sensor Data");
+        List<SensorData> sensorHumidityDataList = sensorDataRepo.findBySensor(sensorHumidity);
+        if (sensorHumidityDataList.isEmpty()) {
+            model.addAttribute("messageHumidity", "No data available for sensor ID 3 (Humidity)");
+        } else {
+            SensorData latestHumidityData = sensorHumidityDataList.stream()
+                    .max(Comparator.comparing(SensorData::getCreated))
+                    .orElse(null);
+            model.addAttribute("humiditySensorId", sensorHumidity.getSensor_id());
+            model.addAttribute("humiditySensorName", sensorHumidity.getName());
+            model.addAttribute("humiditySensorType", sensorHumidity.getType());
+            model.addAttribute("latestHumidityData", latestHumidityData.getValue());
+        }
 
-        return "lastSensorData";
+        return "lastSensorData";  // Return the Thymeleaf template to display both sensor data
     }
 
     // Create Sensor Functionality

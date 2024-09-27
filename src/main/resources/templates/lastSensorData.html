@@ -5,10 +5,30 @@
     <title>Latest Sensor Data</title>
 </head>
 <body>
-<h1>Latest Data for Sensor: <span th:text="${sensorName}"></span></h1>
-<p>Sensor ID: <span th:text="${sensorId}"></span></p>
-<p>Sensor Type: <span th:text="${sensorType}"></span></p>
-<p>Latest Value: <span th:text="${latestSensorData}"></span></p>
+<h1>Latest Data for Connected Sensors</h1>
+
+<!-- Temperature Sensor Data -->
+<div th:if="${temperatureSensorName != null}">
+    <h2>Sensor: <span th:text="${temperatureSensorName}"></span> (Temperature)</h2>
+    <p>Sensor ID: <span th:text="${temperatureSensorId}"></span></p>
+    <p>Sensor Type: <span th:text="${temperatureSensorType}"></span></p>
+    <p>Latest Value: <span th:text="${latestTemperatureData}"></span></p>
+</div>
+<div th:if="${temperatureSensorName == null}">
+    <p th:text="${messageTemperature}"></p>
+</div>
+
+<!-- Humidity Sensor Data -->
+<div th:if="${humiditySensorName != null}">
+    <h2>Sensor: <span th:text="${humiditySensorName}"></span> (Humidity)</h2>
+    <p>Sensor ID: <span th:text="${humiditySensorId}"></span></p>
+    <p>Sensor Type: <span th:text="${humiditySensorType}"></span></p>
+    <p>Latest Value: <span th:text="${latestHumidityData}"></span></p>
+</div>
+<div th:if="${humiditySensorName == null}">
+    <p th:text="${messageHumidity}"></p>
+</div>
+
 <a th:href="@{/}">Return to Home</a>
 </body>
 </html>
