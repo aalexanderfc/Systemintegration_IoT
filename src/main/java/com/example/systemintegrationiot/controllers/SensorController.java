@@ -53,7 +53,7 @@ public class SensorController {
     }
 
     // New method to fetch all sensors and display in the sensorHistory.html
-    @GetMapping("/sensorHistory")
+    @GetMapping("/sensorList")
     public String getAllSensors(Model model) {
         // Fetch all sensors from the database
         List<Sensor> sensors = sensorRepo.findAll();
@@ -62,7 +62,7 @@ public class SensorController {
         model.addAttribute("sensors", sensors);
 
         // Return the Thymeleaf template sensorHistory.html
-        return "sensorHistory";
+        return "sensorList";
     }
 
     @GetMapping("/")

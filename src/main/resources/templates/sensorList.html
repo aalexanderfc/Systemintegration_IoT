@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${sensorName} + ' - Sensorhistorik'">Sensor History</title>
+    <title>Sensor List</title>
     <style>
         /* General Reset */
         * {
@@ -14,7 +14,7 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background: linear-gradient(to bottom right, #f4f7f6, #e1e9e7);
+            background-color: #f4f7f6;
             color: #333;
         }
 
@@ -62,13 +62,15 @@
             text-align: center;
             margin-bottom: 20px;
             font-size: 1.8rem;
-            color: #00796b;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         table, th, td {
@@ -114,10 +116,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin: 20px 0;
-            display: block;
-            width: 200px;
-            margin-left: auto;
-            margin-right: auto;
+            display: inline-block;
         }
 
         button:hover {
@@ -132,24 +131,6 @@
             position: fixed;
             width: 100%;
             bottom: 0;
-        }
-
-        .search-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .search-form {
-            display: flex;
-            justify-content: center;
-            gap: 10px; /* Space between input and button */
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            border: 1px solid #00796b;
-            border-radius: 5px;
-            width: 200px; /* Adjust width as needed */
         }
 
         @media (max-width: 768px) {
@@ -167,59 +148,44 @@
 <body>
 
 <header>
-    <h1>Sensor History</h1>
-    <nav>
-        <ul>
-            <!-- Navigation links can be added here -->
-        </ul>
-    </nav>
+    <h1>All Saved Sensors</h1>
 </header>
 
 <main>
-    <h2 th:text="'Sensor ID: ' + ${sensorId}"></h2>
-    <h2 th:text="'Sensor Namn: ' + ${sensorName}"></h2>
-    <h2 th:text="'Sensor Typ: ' + ${sensorType}"></h2>
-
-    <!-- Search Sensor History Section -->
-    <div class="search-container">
-        <h3>Search for Sensor History</h3>
-        <form th:action="@{/SensorData/history}" method="get" class="search-form">
-            <input type="text" id="sensorId" name="sensorId" placeholder="Enter Sensor ID" required>
-            <button type="submit">Search History</button>
-        </form>
-    </div>
-
-    <!-- If sensor data is available -->
-    <div th:if="${!#lists.isEmpty(sensorDataList)}">
-        <h3>Sensorhistorik:</h3>
+    <!-- Check if the list of sensors is not empty -->
+    <div th:if="${!#lists.isEmpty(sensors)}">
+        <h3>Saved Sensors:</h3>
         <table>
             <thead>
             <tr>
-                <th>Value</th>
-                <th>Created At</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Unit</th>
             </tr>
             </thead>
             <tbody>
-            <!-- Loop through each sensor data record and display it -->
-            <tr th:each="data : ${sensorDataList}">
-                <td th:text="${data.value}"></td>
-                <td th:text="${#temporals.format(data.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <!-- Iterate over the list of sensors and display each sensor's properties -->
+            <tr th:each="sensor : ${sensors}">
+                <td th:text="${sensor.sensor_id}"></td>
+                <td th:text="${sensor.name}"></td>
+                <td th:text="${sensor.type}"></td>
+                <td th:text="${sensor.unit}"></td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- If no data is available, show a message -->
-    <div th:if="${#lists.isEmpty(sensorDataList)}">
-        <p>No data available for this sensor.</p>
+    <!-- Show a message if no sensors are found -->
+    <div th:if="${#lists.isEmpty(sensors)}">
+        <p>No sensors found in the database.</p>
     </div>
-
-    <!-- Button to go back to the home page -->
-    <button onclick="location.href='/'">Go to Home</button>
 </main>
 
 <footer>
-    <p>© 2024 Sensor System Integration IoT</p>
+    <!-- Add another "Go to Home" button in the footer -->
+    <button onclick="location.href='/'">Go to Home</button>
+    <p>© 2024 Sensor System Integration</p>
 </footer>
 
 </body>

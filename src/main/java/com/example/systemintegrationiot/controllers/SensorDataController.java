@@ -30,10 +30,10 @@ public class SensorDataController {
     }
 
     // Fetch sensor history and return to the view
-    @GetMapping("/history/{id}")
-    public String getSensorHistory(@PathVariable Long id, Model model) {
-        Sensor sensor = sensorRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + id + " finns inte"));
+    @GetMapping("/history")
+    public String getSensorHistory(@RequestParam("sensorId") Long sensorId, Model model) {
+        Sensor sensor = sensorRepo.findById(sensorId)
+                .orElseThrow(() -> new IllegalArgumentException("Sensor med ID " + sensorId + " finns inte"));
 
         List<SensorData> sensorDataList = sensorDataRepo.findBySensor(sensor);
 
@@ -41,7 +41,7 @@ public class SensorDataController {
         model.addAttribute("sensorName", sensor.getName());
         model.addAttribute("sensorType", sensor.getType());
         model.addAttribute("sensorDataList", sensorDataList);
-        model.addAttribute("sensorTitle", " History Data");
+
 
         return "sensorhistory";
     }
