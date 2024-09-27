@@ -49,13 +49,13 @@ public class SensorDataController {
     // Fetch the latest sensor data and return to the view
     @GetMapping("/lastdata")
     public String getLastSensorDataForMultipleSensors(Model model) {
-        // Fetch sensor with ID 2 (temperature)
+        // Fetch sensor with ID 2
         Sensor sensorTemperature = sensorRepo.findById(2L)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID 2 (Temperature) does not exist"));
+                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID 2 does not exist"));
 
         List<SensorData> sensorTemperatureDataList = sensorDataRepo.findBySensor(sensorTemperature);
         if (sensorTemperatureDataList.isEmpty()) {
-            model.addAttribute("messageTemperature", "No data available for sensor ID 2 (Temperature)");
+            model.addAttribute("messageTemperature", "No data available for sensor ID 2 ");
         } else {
             SensorData latestTemperatureData = sensorTemperatureDataList.stream()
                     .max(Comparator.comparing(SensorData::getCreated))
@@ -68,11 +68,11 @@ public class SensorDataController {
 
         // Fetch sensor with ID 3 (humidity)
         Sensor sensorHumidity = sensorRepo.findById(3L)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID 3 (Humidity) does not exist"));
+                .orElseThrow(() -> new IllegalArgumentException("Sensor with ID 3 does not exist"));
 
         List<SensorData> sensorHumidityDataList = sensorDataRepo.findBySensor(sensorHumidity);
         if (sensorHumidityDataList.isEmpty()) {
-            model.addAttribute("messageHumidity", "No data available for sensor ID 3 (Humidity)");
+            model.addAttribute("messageHumidity", "No data available for sensor ID 3");
         } else {
             SensorData latestHumidityData = sensorHumidityDataList.stream()
                     .max(Comparator.comparing(SensorData::getCreated))
